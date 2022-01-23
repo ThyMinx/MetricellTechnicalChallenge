@@ -17,7 +17,8 @@ namespace InterviewTest.Controllers
          * List API methods goe here
          * */
 
-        [HttpGet] //READ
+        [HttpGet] //READ - tested in postman and works.
+        [Route("GetEmployeeList")]
         public JsonResult GetEmployeeList()
         {
             var employees = new List<Employee>();
@@ -45,11 +46,10 @@ namespace InterviewTest.Controllers
             return new JsonResult(employees);
         }
 
-        [HttpPut] //UPDATE
+        [HttpPut] //UPDATE - tested in postman and works.
+        [Route("PutEmployee")]
         public JsonResult PutEmployee(Employee employee)
         {
-            var employees = new List<Employee>();
-
             var connectionStringBuilder = new SqliteConnectionStringBuilder() { DataSource = "./SqliteDB.db" };
             using (var connection = new SqliteConnection(connectionStringBuilder.ConnectionString))
             {
@@ -57,17 +57,17 @@ namespace InterviewTest.Controllers
 
                 var queryCmd = connection.CreateCommand();
                 queryCmd.CommandText = @"UPDATE Employees SET Value = " + employee.Value + @" WHERE Name = '" + employee.Name + @"'";
+                queryCmd.ExecuteNonQuery();
             }
 
-            return new JsonResult(employees);
+            return new JsonResult("Updated Successfully");
         }
 
 
-        [HttpPost] //CREATE
+        [HttpPost] //CREATE - tested in postman and works.
+        [Route("PostEmployee")]
         public JsonResult PostEmployee(Employee employee)
         {
-            var employees = new List<Employee>();
-
             var connectionStringBuilder = new SqliteConnectionStringBuilder() { DataSource = "./SqliteDB.db" };
             using (var connection = new SqliteConnection(connectionStringBuilder.ConnectionString))
             {
@@ -78,25 +78,24 @@ namespace InterviewTest.Controllers
                 queryCmd.ExecuteNonQuery();
             }
 
-            return new JsonResult(employees);
+            return new JsonResult("Created Successfully");
         }
 
-        [HttpDelete("{Name}")] //DELETE
-        public JsonResult DeleteEmployee(string Name)
+        [HttpDelete] //DELETE - tested in postman and works.
+        [Route("DeleteEmployee/{name}")]
+        public JsonResult DeleteEmployee(string name)
         {
-            var employees = new List<Employee>();
-
             var connectionStringBuilder = new SqliteConnectionStringBuilder() { DataSource = "./SqliteDB.db" };
             using (var connection = new SqliteConnection(connectionStringBuilder.ConnectionString))
             {
                 connection.Open();
 
                 var queryCmd = connection.CreateCommand();
-                queryCmd.CommandText = @"DELETE FROM Employees WHERE Name = '" + Name + @"'";
+                queryCmd.CommandText = @"DELETE FROM Employees WHERE Name = '" + name + @"'";
                 queryCmd.ExecuteNonQuery();
             }
 
-            return new JsonResult(employees);
+            return new JsonResult("Deleted Successfully");
         }
     }
 }
