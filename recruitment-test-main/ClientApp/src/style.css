@@ -2,3 +2,9 @@ body {
     margin:0px;
     padding:0px;
 }
+
+.loading{
+    display: flex;
+    width:auto;
+    padding:5em;
+}

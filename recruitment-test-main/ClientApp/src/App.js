@@ -1,4 +1,5 @@
-import React, { Component} from 'react';
+// import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Bootstrap/css/bootstrap.min.css';
 import './style.css';
 import { Header } from './header';
@@ -7,58 +8,64 @@ import CreateEmployee from './createEmployee';
 import { EmployeeCounter } from './employeeCounter';
 import { getAllEmployees, createEmployee } from './employeeService'; 
 
-export default class App extends Component {
+export default function App() {
 
-    state = {
-        employee: {},
-        employees: [],
-        numberOfEmployees: 0
-    }
+    const [employees, setEmployees] = useState();
+    const [employee, setEmployee] = useState({Name:"",Value:0});
 
-    createEmployee = (e) => {
-        createEmployee(this.state.employee).then(response => {
+    const create = (e) => {
+        console.log("employee:::" + employee);
+        createEmployee(employee).then(response => {
             console.log(response);
-            this.setState({numberOfEmployees: this.state.numberOfEmployees + 1})
+            // setEmployee();
         });
     }
 
-    getAllEmployees = (e) => {
-        getAllEmployees().then(employees => {
-            console.log(employees);
-            this.setState({employees: employees, numberOfEmployees: employees.length});
-        });
-    }
-
-    onChangeForm = (e) => {
-        let employee = this.state.employee
+    const onChangeForm = (e) => {
+        console.log("change");
+        //let employee = employee;
         if(e.target.name === 'name'){
             employee.Name = e.target.value;
         }
         else if (e.target.name === 'value'){
             employee.Value = e.target.value;
         }
-        this.setState({employee});
+        setEmployee(employee);
+        console.log(employee);
     }
 
-    render() {
-        return (
-            // <div>Complete your app here</div>
-            <div>
-                <Header></Header>
-                <div className="container mrgnbtm">
-                    <div className="row">
-                        <div className="col-md-8">
-                            <CreateEmployee onChangeForm={this.onChangeForm} createEmployee={this.createEmployee}></CreateEmployee>
-                        </div>
-                        <div className="col-md-4">
-                            <EmployeeCounter numberOfEmployees={this.state.numberOfEmployees} getAllEmployees={this.getAllEmployees}></EmployeeCounter>
-                        </div>
+    // useEffect(async () => {
+    //     // getAllEmployees();        
+    //     const result = await getAllEmployees();
+    //     setEmployees(result);
+    // },[])
+
+    useEffect(() => {
+        async function fetchData() {
+          setEmployees(await getAllEmployees());
+        }
+        fetchData();
+    },[]);
+
+    return (
+        // <div>Complete your app here</div>
+        <div>
+            <Header></Header>
+            <div className="container mrgnbtm">
+                <div className="row">
+                    <div className="col-md-8">
+                        <CreateEmployee onChangeForm={onChangeForm} createEmployee={create}></CreateEmployee>
+                    </div>
+                    <div className="col-md-4">
+                        <EmployeeCounter numberOfEmployees={employees?.length ?? 0} getAllEmployees={getAllEmployees}></EmployeeCounter>
                     </div>
                 </div>
-                <div className="row mrgnbtm">
-                    <Employees employees={this.state.employees}></Employees>
-                </div>
             </div>
-        );
-    }
+            <div className="row mrgnbtm">
+                {employees ? <Employees employees={employees} getAllEmployees={getAllEmployees}></Employees> : 
+                <div className="loading"> <p>Loading employees...</p> </div>}
+            </div>
+        </div>
+    );
+
 }

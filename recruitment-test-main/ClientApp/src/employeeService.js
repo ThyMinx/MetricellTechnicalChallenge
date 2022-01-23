@@ -5,6 +5,7 @@ export async function getAllEmployees() {
 }
 
 export async function createEmployee(data) {
+    console.log("data:::" + data);
     const response = await fetch('/List/PostEmployee', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},

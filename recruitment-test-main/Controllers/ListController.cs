@@ -97,5 +97,35 @@ namespace InterviewTest.Controllers
 
             return new JsonResult("Deleted Successfully");
         }
+
+        [HttpGet] //READ - tested in postman and works.
+        [Route("IncrementEmployeeValues")]
+        public JsonResult IncrementEmployeeValues()
+        {
+            var employees = new List<Employee>();
+
+            var connectionStringBuilder = new SqliteConnectionStringBuilder() { DataSource = "./SqliteDB.db" };
+            using (var connection = new SqliteConnection(connectionStringBuilder.ConnectionString))
+            {
+                connection.Open();
+
+                var queryCmd = connection.CreateCommand();
+                queryCmd.CommandText = @"set @employeeName varchar
+                                        SELECT Name, Value FROM Employees AND";
+                using (var reader = queryCmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        employees.Add(new Employee
+                        {
+                            Name = reader.GetString(0),
+                            Value = reader.GetInt32(1)
+                        });
+                    }
+                }
+            }
+
+            return new JsonResult(employees);
+        }
     }
 }
