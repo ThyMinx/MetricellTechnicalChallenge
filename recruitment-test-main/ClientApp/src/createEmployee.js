@@ -50,6 +50,7 @@ export default function Create() {
                             </div>    
                         </div>  
                         <button type="button" onClick={postData} className="btn btn-information">Create</button>  
+                        {/* <button type="button" className="btn btn-danger" data-dismiss="modal">Cancel</button> */}
                     </form>    
                 </div>    
             </div>

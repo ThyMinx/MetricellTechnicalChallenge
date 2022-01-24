@@ -2,45 +2,11 @@ import React, { useEffect, useState } from 'react';
 import './Bootstrap/css/bootstrap.min.css';
 import './style.css';
 import { Header } from './header';
-// import CRUDFormContainer from './crudFormContainer';
 import Create from './createEmployee';
 import Read from './employees';
 import Update from './updateEmployee';
-import { EmployeeCounter } from './employeeCounter';
-import { getAllEmployees, createEmployee } from './employeeService'; 
 
 export default function App(){
-
-    // state = {
-    //     employee: {},
-    //     employees: [],
-    //     numberOfEmployees: 0
-    // }
-
-    // createEmployee = (e) => {
-    //     createEmployee(this.state.employee).then(response => {
-    //         console.log(response);
-    //         this.setState({numberOfEmployees: this.state.numberOfEmployees + 1})
-    //     });
-    // }
-
-    // getAllEmployees = (e) => {
-    //     getAllEmployees().then(employees => {
-    //         console.log(employees);
-    //         this.setState({employees: employees, numberOfEmployees: employees.length});
-    //     });
-    // }
-
-    // const onChangeForm = (e) => {
-    //     let employee = this.state.employee
-    //     if(e.target.name === 'name'){
-    //         employee.Name = e.target.value;
-    //     }
-    //     else if (e.target.name === 'value'){
-    //         employee.Value = e.target.value;
-    //     }
-    //     this.setState({employee});
-    // }
     
     const [createOrUpdate, setCreateOrUpdate] = useState(true);
 
@@ -67,7 +33,7 @@ export default function App(){
                     </div>
                 </div>
             </div>
-            <div className="row mt-5 mrgnbtm">
+            <div className="row m-5">
                 <Read />
             </div>
         </div>

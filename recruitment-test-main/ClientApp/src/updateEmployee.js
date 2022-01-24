@@ -8,11 +8,27 @@ export default function Update() {
         //Put request goes here. http://localhost:41478/UpdateEmployee/${name}
         console.log(name);
         console.log(value);
-        localStorage.setItem('create',true);
-    }
-
-    const cancelUpdate = () => {
-        localStorage.setItem('create',true);
+        const employee = {"name": name, "value": parseInt(value)};
+        console.log(employee);
+        fetch("/List/PutEmployee",{
+            method: 'PUT',
+             mode: 'cors',
+             cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+             credentials: 'same-origin', // include, *same-origin, omit
+            headers: {'Content-Type': 'application/json'},
+             redirect: 'follow', // manual, *follow, error
+             referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+            body: JSON.stringify(employee)
+        })
+        .then(response => response.json())
+        .then(
+            (result) => {
+            console.log(result);
+            },
+            (error) => {
+            console.log("error:::" + error.message);
+            console.log("error at postData");
+        });
     }
 
     useEffect(() => {
@@ -21,8 +37,7 @@ export default function Update() {
     }, []);
 
     return(
-        <div className="container">
-            {(name === '' || value === '') ? <div></div> :             
+        <div className="container">           
             <div className="row">
                 <div className="col-md-7 mrgnbtm">
                     <h2>Update Employee</h2>
@@ -30,7 +45,7 @@ export default function Update() {
                         <div className="row">
                             <div className="form-group col-md-6">
                                 <label htmlFor="inputName">Name</label>
-                                <input type="text" onChange={(e) => setName(e.target.value)} className="form-control" name="name" id="name" placeholder="Name" value={name}/>
+                                <input type="text" onChange={(e) => setName(e.target.value)} className="form-control disabled" name="name" id="name" placeholder="Name" value={name}/>
                             </div>    
                             <div className="form-group col-md-6">
                                 <label htmlFor="inputValue">Value</label>
@@ -38,11 +53,10 @@ export default function Update() {
                             </div>    
                         </div>  
                         <button type="button" onClick={updateData} className="btn btn-information">Update</button>  
-                        <button type="button" onClick={cancelUpdate} className="btn btn-danger">Cancel</button>
+                        {/* <button type="button" className="btn btn-danger" data-dismiss="modal">Cancel</button> */}
                     </form>    
                 </div>    
-            </div> }
-
+            </div> 
         </div>
     )
 }
