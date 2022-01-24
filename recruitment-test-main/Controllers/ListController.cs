@@ -17,8 +17,8 @@ namespace InterviewTest.Controllers
          * List API methods goe here
          * */
 
-        [HttpGet] //READ - tested in postman and works.
         [Route("GetEmployeeList")]
+        [HttpGet] //READ - tested in postman and works.
         public JsonResult GetEmployeeList()
         {
             var employees = new List<Employee>();
@@ -46,8 +46,8 @@ namespace InterviewTest.Controllers
             return new JsonResult(employees);
         }
 
-        [HttpPut] //UPDATE - tested in postman and works.
         [Route("PutEmployee")]
+        [HttpPut] //UPDATE - tested in postman and works.
         public JsonResult PutEmployee(Employee employee)
         {
             var connectionStringBuilder = new SqliteConnectionStringBuilder() { DataSource = "./SqliteDB.db" };
@@ -64,8 +64,8 @@ namespace InterviewTest.Controllers
         }
 
 
-        [HttpPost] //CREATE - tested in postman and works.
         [Route("PostEmployee")]
+        [HttpPost] //CREATE - tested in postman and works.
         public JsonResult PostEmployee(Employee employee)
         {
             var connectionStringBuilder = new SqliteConnectionStringBuilder() { DataSource = "./SqliteDB.db" };
@@ -81,8 +81,8 @@ namespace InterviewTest.Controllers
             return new JsonResult("Created Successfully");
         }
 
-        [HttpDelete] //DELETE - tested in postman and works.
         [Route("DeleteEmployee/{name}")]
+        [HttpDelete] //DELETE - tested in postman and works.
         public JsonResult DeleteEmployee(string name)
         {
             var connectionStringBuilder = new SqliteConnectionStringBuilder() { DataSource = "./SqliteDB.db" };

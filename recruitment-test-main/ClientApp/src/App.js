@@ -62,7 +62,8 @@ export default function App(){
                     <div className="col-md-12">
                         {/* <button className="btn btn-primary mb-5" onClick={(e) => onChangeButton(true)}>Create Employee Menu</button> */}
                         {/* <button className="btn btn-secondary" onClick={(e) => onChangeButton(false)}>Update Menu</button> */}
-                        {createOrUpdate ? <Create /> : <Update />}
+                        {/* {createOrUpdate ? <Create /> : <Update />} */}
+                        <Create />
                     </div>
                 </div>
             </div>

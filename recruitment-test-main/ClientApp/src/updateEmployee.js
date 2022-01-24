@@ -22,6 +22,7 @@ export default function Update() {
 
     return(
         <div className="container">
+            {(name === '' || value === '') ? <div></div> :             
             <div className="row">
                 <div className="col-md-7 mrgnbtm">
                     <h2>Update Employee</h2>
@@ -40,7 +41,8 @@ export default function Update() {
                         <button type="button" onClick={cancelUpdate} className="btn btn-danger">Cancel</button>
                     </form>    
                 </div>    
-            </div>
+            </div> }
+
         </div>
     )
 }

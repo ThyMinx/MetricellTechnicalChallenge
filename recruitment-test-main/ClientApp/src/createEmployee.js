@@ -9,12 +9,18 @@ export default function Create() {
         //Post request goes here.
         console.log(name);
         console.log(value);
-        console.log({"name":name, "value":value});
+        const employee = {"name": name, "value": parseInt(value)};
+        console.log(employee);
         // createEmployee({"name":name, "value":value});
-        fetch("http://localhost:41478/List/GetEmployeeList",{
+        fetch("/List/PostEmployee",{
             method: 'POST',
+             mode: 'cors',
+             cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+             credentials: 'same-origin', // include, *same-origin, omit
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({"employee":{"name":name, "value":value}})
+             redirect: 'follow', // manual, *follow, error
+             referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+            body: JSON.stringify(employee)
         })
         .then(response => response.json())
         .then(

@@ -11,11 +11,12 @@ export default function Read(){
 
     const getData = () => {
         //Get request.
-        fetch("http://localhost:41478/List/GetEmployeeList")
+        fetch("/List/GetEmployeeList")
         .then(response => response.json())
         .then(
             (result) => {
-            setEmployees(result); // ---------------- For some reason doesn't get list of employees
+            setEmployees(result);
+            console.log(result);
             },
             (error) => {
             console.log("error:::" + error.message);
@@ -33,8 +34,11 @@ export default function Read(){
 
     const onDelete = (name) => {
         //Delete request goes here.
-        fetch("http://localhost:41478/List/DeleteEmployee/" + name, { method: 'DELETE' })
-        .then(() => window.alert("Delete Successful"));
+        fetch("/List/DeleteEmployee/" + name, { method: 'DELETE' })
+        .then(() => window.alert("Delete Successful"))
+        .then(() => {
+            getData();
+        });
     }
 
     return(
