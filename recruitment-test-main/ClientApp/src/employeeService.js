@@ -5,7 +5,7 @@ export async function getAllEmployees() {
 }
 
 export async function createEmployee(data) {
-    const response = await fetch('/List/PostEmployee', {
+    const response = await fetch('http://localhost:41478/List/PostEmployee', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(data)

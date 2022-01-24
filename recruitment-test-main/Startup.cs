@@ -28,6 +28,13 @@ namespace InterviewTest
             {
                 configuration.RootPath = "ClientApp/build";
             });
+
+            services.AddCors(options =>
+            options.AddPolicy(name: "_allowCORS",
+            builder =>
+            {
+                builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+            }));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -36,6 +43,7 @@ namespace InterviewTest
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseCors("_allowCORS");
             }
 
             app.UseStaticFiles();
