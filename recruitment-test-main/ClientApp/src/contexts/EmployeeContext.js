@@ -26,6 +26,40 @@ const EmployeeContextProvider = (props) => {
         });
     }
 
+    const getSums = () =>{
+        fetch("/List/SumList")
+        .then(response => response.json())
+        .then(
+            (result) => {
+                console.log(result);
+                let msg = "";
+                for(let i = 0; i < result.length; i++) {
+                    console.log(result[i]);
+                    console.log(result[i].y + " " + result[i].x);
+                    msg += result[i].y + " is the total value for " + result[i].x + ".\n";
+                }
+                console.log(msg);
+                window.alert(msg);
+            },
+            (error) => {
+            console.log("error:::" + error.message);
+            console.log("error at getData");
+        });
+    }
+    
+    const getIncrement = () =>{
+        fetch("/List/Increment")
+        .then(response => response.json())
+        .then(
+            () => {
+            getEmployees();
+            },
+            (error) => {
+            console.log("error:::" + error.message);
+            console.log("error at getData");
+        });
+    }
+
     //Create
     const addEmployee = (name, value) => {
         //Post request goes here and if successful then setEmployees should be called.
@@ -82,7 +116,7 @@ const EmployeeContextProvider = (props) => {
     }
 
     return(
-        <EmployeeContext.Provider value={{employees, addEmployee, deleteEmployee, updateEmployee, getEmployees}}>
+        <EmployeeContext.Provider value={{employees, addEmployee, deleteEmployee, updateEmployee, getEmployees, getIncrement, getSums}}>
             {props.children}
         </EmployeeContext.Provider>
     )

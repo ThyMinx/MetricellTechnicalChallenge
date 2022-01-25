@@ -9,6 +9,8 @@ const EmployeeList = () => {
 
     //When the data in the context is changed the useContext hook will re-run
     const {employees} = useContext(EmployeeContext);
+    const {getIncrement} = useContext(EmployeeContext);
+    const {getSums} = useContext(EmployeeContext);
 
     const [showAlert, setShowAlert] = useState(false);
 
@@ -18,7 +20,7 @@ const EmployeeList = () => {
     const handleClose = () => setShow(false);
 
     const [currentPage, setCurrentPage] = useState(1);
-    const [employeesPerPage] = useState(5);
+    const [employeesPerPage] = useState(10);
 
     const handleShowAlert = () => {
         setShowAlert(true);
@@ -26,6 +28,14 @@ const EmployeeList = () => {
             setShowAlert(false);
         }, 2000)
     };
+
+    const handleIncrement = () => {
+        getIncrement();
+    }
+
+    const handleSums = () => {
+        getSums();
+    }
 
     //Runs once at the start
     useEffect(() =>{
@@ -51,6 +61,12 @@ const EmployeeList = () => {
                     <div className="col-sm-6">
                         <Button onClick={handleShow} className="btn btn-info m-2" data-toggle="modal">
                             <span>Create New Employee</span>
+                        </Button>
+                        <Button onClick={handleIncrement} className="btn btn-info m-2">
+                            <span>Increment Employee Values</span>
+                        </Button>
+                        <Button onClick={handleSums} className="btn btn-info m-2">
+                            <span>Get List of Sums</span>
                         </Button>
                     </div>
                 </div>
@@ -80,7 +96,7 @@ const EmployeeList = () => {
                 </tbody>
             </table>
 
-            <Pagination pages={totalPagesNum} setCurrentPage={setCurrentPage}/>
+            <Pagination pages={totalPagesNum} setCurrentPage={setCurrentPage} totalEmployees={employees.length} currentEmployees={currentEmployees.length}/>
             
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>

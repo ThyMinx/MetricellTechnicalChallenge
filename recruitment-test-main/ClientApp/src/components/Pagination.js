@@ -1,7 +1,7 @@
 import {Button} from 'react-bootstrap';
 import React, {useContext, useState, useEffect} from 'react';
 
-const Pagination = ({pages, setCurrentPage}) => {
+const Pagination = ({pages, setCurrentPage, totalEmployees, currentEmployees}) => {
 
     const numOfPages = [];
 
@@ -18,7 +18,15 @@ const Pagination = ({pages, setCurrentPage}) => {
     return(
         <div className="clearfix">
             <div className="hint-text">
-                Showing <b>5</b> out of <b>25</b> entries
+                Showing <b>{
+                        (currentButton === 1)?
+                        currentEmployees
+                        :
+                        (currentButton === numOfPages.length)?
+                        ((currentButton - 1) * 10 + 1) + " to " + totalEmployees
+                        :
+                        ((currentButton - 1) * currentEmployees + 1) + " to " + currentButton * currentEmployees
+                }</b> out of <b>{totalEmployees}</b> entries
             </div>
             <ul className="pagination">
                 <li className={`$if{currentButton === 1 ? 'page-item disabled' : 'page-item'}`}>
